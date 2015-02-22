@@ -13,7 +13,7 @@ function TSDB(dir) {
 	this.schema = {};
 	this.dir = dir;
 }
-TSDB.prototype.defineTable = function(table, columnDefinitions, cb) {
+TSDB.prototype.defineTable = function(table, columnDefinitions, cb) { // first column is assumed to be the "time" column with an natural order
 	"use strict";
 	assert.string(table, "table");
 	assert.arrayOfObject(columnDefinitions, "columnDefinitions");
