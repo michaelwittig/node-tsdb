@@ -1,6 +1,7 @@
 var fs = require("fs");
 var assert = require("assert-plus");
 var uuid = require("node-uuid");
+var mkdirp = require("mkdirp");
 
 var columnstream = require("../lib/columnstream.js");
 var types = require("../lib/types.js");
@@ -12,6 +13,9 @@ function randomfile() {
 
 describe("columnstream", function() {
 	"use strict";
+	before(function() {
+		mkdirp.sync("./test/tmp");
+	});
 	describe("single item", function() {
 		var type = types("uint32"), file = randomfile();
 		it("writable", function(done) {
@@ -90,7 +94,7 @@ describe("columnstream", function() {
 			}
 			function enterWriteLoop() {
 				while (i < needed) {
-					var continueWriting = writable.write([i, 1.0, 1], cb);
+					var continueWriting = writable.write(i, cb);
 					i++;
 					if (continueWriting === false) {
 						return;
