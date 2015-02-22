@@ -19,7 +19,8 @@
 		"mocha": "2.1.0",
 		"jshint": "2.6.0",
 		"madge": "0.4.1",
-		"npmedge": "0.2.1"
+		"npmedge": "0.2.1",
+		"node-uuid": "1.4.2"
 	},
 	"repository": {
 		"type": "git",
