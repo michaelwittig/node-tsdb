@@ -113,6 +113,7 @@ describe("columnstream", function() {
 			readable.on("readable", function() {
 				var value;
 				while (null !== (value = readable.read())) {
+					assert.equal(value, reads, "value");
 					reads++;
 				}
 			});
