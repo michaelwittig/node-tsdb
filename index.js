@@ -57,7 +57,7 @@ TSDB.prototype.createWriteStream = function(table, partition, cb) {
 				if (err) {
 					cb(err);
 				} else {
-					cb(undefined, new tablestream.WritablTableStream(writableColumnStreams));
+					cb(undefined, new tablestream.WritableTableStream(writableColumnStreams));
 				}
 			});
 		}
