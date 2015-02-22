@@ -100,12 +100,13 @@ function createSensor01Data() {
 			throw err;
 		}
 		function enterWriteLoop() {
-			for (i; i < needed; i++) {
-				if (writable.write([i, 1.0, 1], done) === false) {
+			while (i < needed) {
+				var continueWriting = writable.write([i, 1.0, 1], done);
+				i++;
+				if (continueWriting === false) {
 					return;
 				}
 			}
-			console.log("done2: create sensor01 data", [i, dones, Date.now() - begin]);
 		}
 		writable.on("drain", function() {
 			enterWriteLoop();
@@ -125,7 +126,7 @@ function readSensor01Data() {
 		readable.on("readable", function() {
 			var value;
 			while (null !== (value = readable.read())) {
-				//console.log("" + value);
+				//console.log("", value);
 				i++;
 			}
 		});
