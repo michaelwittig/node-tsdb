@@ -1,6 +1,6 @@
 var fs = require("fs");
-var underscore = require("underscore");
-var async = require("async");
+var lodash = require("lodash");
+var async = require("neo-async");
 var mkdirp = require("mkdirp");
 var assert = require("assert-plus");
 
@@ -21,7 +21,7 @@ TSDB.prototype.defineTable = function(table, columnDefinitions, cb) { // first c
 	var self = this;
 	this.schema[table] = {
 		table: table,
-		columns: underscore.map(columnDefinitions, function(columnDefinition) {
+		columns: lodash.map(columnDefinitions, function(columnDefinition) {
 			return {
 				name: columnDefinition.name,
 				type: types(columnDefinition.type),

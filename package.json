@@ -10,8 +10,8 @@
 	"author": "Michael Wittig <post@michaelwittig.info>",
 	"license": "MIT",
 	"dependencies": {
-		"underscore": "1.8.2",
-		"async": "0.9.0",
+		"lodash": "3.3.0",
+		"neo-async": "0.6.1",
 		"mkdirp": "0.5.0",
 		"assert-plus": "0.1.5"
 	},
