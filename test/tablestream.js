@@ -37,6 +37,25 @@ describe("tablestream", function() {
 				done();
 			});
 		});
+		it("readable", function(done) {
+			var fd1 = fs.openSync(file + ".1", "r");
+			var fd2 = fs.openSync(file + ".2", "r");
+			var fd3 = fs.openSync(file + ".3", "r");
+			var readable1 = new columnstream.ReadableColumnStream(fd1, type);
+			var readable2 = new columnstream.ReadableColumnStream(fd2, type);
+			var readable3 = new columnstream.ReadableColumnStream(fd3, type);
+			var readable = tablestream.readableTableHighlandStream([readable1, readable2, readable3]);
+			var reads = 0;
+			readable
+				.each(function(value) {
+					assert.deepEqual(value, [1, 2, 3], "value");
+					reads++;
+				})
+				.done(function() {
+					assert.equal(reads, 1, "reads");
+					done();
+				});
+		});
 	});
 	describe("multiple items", function() {
 		var type = types("uint32"), file = randomfile();
@@ -59,6 +78,29 @@ describe("tablestream", function() {
 					done();
 				});
 			});
+		});
+		it("readable", function(done) {
+			var fd1 = fs.openSync(file + ".1", "r");
+			var fd2 = fs.openSync(file + ".2", "r");
+			var fd3 = fs.openSync(file + ".3", "r");
+			var readable1 = new columnstream.ReadableColumnStream(fd1, type);
+			var readable2 = new columnstream.ReadableColumnStream(fd2, type);
+			var readable3 = new columnstream.ReadableColumnStream(fd3, type);
+			var readable = tablestream.readableTableHighlandStream([readable1, readable2, readable3]);
+			var reads = 0;
+			readable
+				.each(function(value) {
+					if (reads === 0) {
+						assert.deepEqual(value, [1, 2, 3], "value");
+					} else {
+						assert.deepEqual(value, [4, 5, 6], "value");
+					}
+					reads++;
+				})
+				.done(function() {
+					assert.equal(reads, 2, "reads");
+					done();
+				});
 		});
 	});
 	describe("mass items", function() {
@@ -97,6 +139,25 @@ describe("tablestream", function() {
 				enterWriteLoop();
 			});
 			enterWriteLoop();
+		});
+		it("readable", function(done) {
+			var fd1 = fs.openSync(file + ".1", "r");
+			var fd2 = fs.openSync(file + ".2", "r");
+			var fd3 = fs.openSync(file + ".3", "r");
+			var readable1 = new columnstream.ReadableColumnStream(fd1, type);
+			var readable2 = new columnstream.ReadableColumnStream(fd2, type);
+			var readable3 = new columnstream.ReadableColumnStream(fd3, type);
+			var readable = tablestream.readableTableHighlandStream([readable1, readable2, readable3]);
+			var reads = 0;
+			readable
+				.each(function(value) {
+					assert.deepEqual(value, [reads, reads+1, reads+2], "value");
+					reads++;
+				})
+				.done(function() {
+					assert.equal(reads, needed, "reads");
+					done();
+				});
 		});
 	});
 });
