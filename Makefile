@@ -10,6 +10,7 @@ circular:
 
 mocha:
 	@echo "mocha"
+	@rm -rf test/tmp
 	@./node_modules/.bin/mocha -t 20000 test/*.js
 	@echo
 
